@@ -5,6 +5,7 @@ public class GameObjectsScript : MonoBehaviour
     public GameObject garbageTruck;
     public GameObject medicine;
     public GameObject schoolBus;
+    // Japievieno parejie
 
     [HideInInspector]
     public Vector2 garbageTruckCoord;
@@ -19,7 +20,7 @@ public class GameObjectsScript : MonoBehaviour
 
     [HideInInspector]
     public bool inRightPlace = false;
-    public static GameObjectsScript lastDragged = null;
+    public static GameObject lastDragged = null;
     public static bool isDragging = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
