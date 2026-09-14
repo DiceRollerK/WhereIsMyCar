@@ -8,7 +8,8 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
     private float xSizeDiff, ySizeDiff;
     public GameObjectsScript gameObjectsScript;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // Start is called once before the first execution of Update after the MonoBehav
+    // our is created
     void Start()
     {
         gameObjectsScript = Object.FindFirstObjectByType<GameObjectsScript>();
