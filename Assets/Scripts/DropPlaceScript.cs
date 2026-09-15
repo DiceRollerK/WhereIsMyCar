@@ -55,6 +55,33 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
                         case "School":
                             gameObjectsScript.carSoundSource.PlayOneShot(gameObjectsScript.sounds[3]);
                             break;
+                        case "Car":
+                            gameObjectsScript.carSoundSource.PlayOneShot(gameObjectsScript.sounds[4]);
+                            break;
+                        case "CementTruck":
+                            gameObjectsScript.carSoundSource.PlayOneShot(gameObjectsScript.sounds[5]);
+                            break;
+                        case "Car2":
+                            gameObjectsScript.carSoundSource.PlayOneShot(gameObjectsScript.sounds[6]);
+                            break;
+                        case "Car3":
+                            gameObjectsScript.carSoundSource.PlayOneShot(gameObjectsScript.sounds[7]);
+                            break;
+                        case "Excavator":
+                            gameObjectsScript.carSoundSource.PlayOneShot(gameObjectsScript.sounds[8]);
+                            break;
+                        case "Police":
+                            gameObjectsScript.carSoundSource.PlayOneShot(gameObjectsScript.sounds[9]);
+                            break;
+                        case "Tractor":
+                            gameObjectsScript.carSoundSource.PlayOneShot(gameObjectsScript.sounds[10]);
+                            break;
+                        case "Tractor2":
+                            gameObjectsScript.carSoundSource.PlayOneShot(gameObjectsScript.sounds[11]);
+                            break;
+                        case "Firetruck":
+                            gameObjectsScript.carSoundSource.PlayOneShot(gameObjectsScript.sounds[12]);
+                            break;
                         default:
                             Debug.Log("No matching tag found for the dropped object: " + eventData.pointerDrag.tag);
                             break;
@@ -63,7 +90,7 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
             } else
             {
                 gameObjectsScript.inRightPlace = false;
-                gameObjectsScript.carSoundSource.PlayOneShot(gameObjectsScript.sounds[14]);
+                gameObjectsScript.carSoundSource.PlayOneShot(gameObjectsScript.sounds[13]);
 
                 eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
 
@@ -83,6 +110,33 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
 
                     case "School":
                         gameObjectsScript.schoolBus.GetComponent<RectTransform>().localPosition = gameObjectsScript.schoolBusCoord;
+                        break;
+                    case "Car":
+                        gameObjectsScript.car.GetComponent<RectTransform>().localPosition = gameObjectsScript.carCoord;
+                        break;
+                    case "CementTruck":
+                        gameObjectsScript.cementTruck.GetComponent<RectTransform>().localPosition = gameObjectsScript.cementTruckCoord;
+                        break;
+                    case "Car2":
+                        gameObjectsScript.car2.GetComponent<RectTransform>().localPosition = gameObjectsScript.car2Coord;
+                        break;
+                    case "Car3":
+                        gameObjectsScript.car3.GetComponent<RectTransform>().localPosition = gameObjectsScript.car3Coord;
+                        break;
+                    case "Excavator":
+                        gameObjectsScript.excavator.GetComponent<RectTransform>().localPosition = gameObjectsScript.excavatorCoord;
+                        break;
+                    case "Police":
+                        gameObjectsScript.police.GetComponent<RectTransform>().localPosition = gameObjectsScript.policeCoord;
+                        break;
+                    case "Tractor":
+                        gameObjectsScript.tractor.GetComponent<RectTransform>().localPosition = gameObjectsScript.tractorCoord;
+                        break;
+                    case "Tractor2":
+                        gameObjectsScript.tractor2.GetComponent<RectTransform>().localPosition = gameObjectsScript.tractor2Coord;
+                        break;
+                    case "Firetruck":
+                        gameObjectsScript.firetruck.GetComponent<RectTransform>().localPosition = gameObjectsScript.firetruckCoord;
                         break;
                     default:
                         Debug.Log("No matching tag found for the dropped object: " + eventData.pointerDrag.tag);

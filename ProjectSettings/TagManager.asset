@@ -7,6 +7,15 @@ TagManager:
   - Garbage
   - Ambulance
   - School
+  - Car
+  - CementTruck
+  - Car2
+  - Car3
+  - Excavator
+  - Police
+  - Tractor
+  - Tractor2
+  - Firetruck
   layers:
   - Default
   - TransparentFX
