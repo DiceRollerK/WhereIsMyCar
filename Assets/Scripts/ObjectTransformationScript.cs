@@ -26,7 +26,7 @@ public class ObjectTransformationScript : MonoBehaviour
 
             if (Input.GetKey(KeyCode.UpArrow))
             {
-                if(GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale.y < 0.9f)
+                if (GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale.y < 0.9f)
                 {
                     GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale = new Vector3(GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale.x, GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale.y + 0.002f, 1f);
                 }
@@ -42,17 +42,23 @@ public class ObjectTransformationScript : MonoBehaviour
 
             if (Input.GetKey(KeyCode.LeftArrow))
             {
-                if (GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale.x > 0.3f)
+                if (GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale.x > 0.3f && GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale.x > 0)
                 {
                     GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale = new Vector3(GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale.x - 0.002f, GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale.y, 1f);
+                } else if (GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale.x < -0.3f && GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale.x < 0)
+                {
+                    GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale = new Vector3(GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale.x + 0.002f, GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale.y, 1f);
                 }
             }
 
             if (Input.GetKey(KeyCode.RightArrow))
             {
-                if (GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale.x < 0.9f)
+                if (GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale.x < 0.9f && GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale.x > 0f)
                 {
                     GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale = new Vector3(GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale.x + 0.002f, GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale.y, 1f);
+                } else if (GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale.x > -0.9f && GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale.x < 0f)
+                {
+                    GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale = new Vector3(GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale.x - 0.002f, GameObjectsScript.lastDragged.GetComponent<RectTransform>().localScale.y, 1f);
                 }
             }
 
