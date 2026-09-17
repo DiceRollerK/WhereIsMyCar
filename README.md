@@ -15,7 +15,7 @@ Where Is My Car ir 2D Unity spēle kur vajag savilkt visas mašīnas kopā ar to
 - [X] Iespēja kameru pietuvināt 
 - [ ] Animācijas
 - [ ] Uzvaras stāvoklis
-- [ ] Galvenā izvēlne
+- [X] Galvenā izvēlne
 - [ ] Tālruņu atablsts
 
 # Izmantotās tehnoloģijas
