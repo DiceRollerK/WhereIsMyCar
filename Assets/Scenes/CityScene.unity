@@ -336,6 +336,18 @@ MonoBehaviour:
   tractor: {fileID: 1472649401}
   tractor2: {fileID: 814348826}
   firetruck: {fileID: 163081737}
+  garbageTruckPlace: {fileID: 1502733214}
+  medicinePlace: {fileID: 1755016833}
+  schoolBusPlace: {fileID: 1321499203}
+  carPlace: {fileID: 638544877}
+  cementTruckPlace: {fileID: 1805580069}
+  car2Place: {fileID: 147698604}
+  car3Place: {fileID: 439273789}
+  excavatorPlace: {fileID: 1991736694}
+  policePlace: {fileID: 970673525}
+  tractorPlace: {fileID: 758638812}
+  tractor2Place: {fileID: 839638994}
+  firetruckPlace: {fileID: 1552053292}
   garbageTruckCoord: {x: 0, y: 0}
   medicineCoord: {x: 0, y: 0}
   schoolBusCoord: {x: 0, y: 0}
@@ -348,6 +360,18 @@ MonoBehaviour:
   tractorCoord: {x: 0, y: 0}
   tractor2Coord: {x: 0, y: 0}
   firetruckCoord: {x: 0, y: 0}
+  garbageTruckPlaceCoord: {x: 0, y: 0}
+  medicinePlaceCoord: {x: 0, y: 0}
+  schoolBusPlaceCoord: {x: 0, y: 0}
+  carPlaceCoord: {x: 0, y: 0}
+  cementTruckPlaceCoord: {x: 0, y: 0}
+  car2PlaceCoord: {x: 0, y: 0}
+  car3PlaceCoord: {x: 0, y: 0}
+  excavatorPlaceCoord: {x: 0, y: 0}
+  policePlaceCoord: {x: 0, y: 0}
+  tractorPlaceCoord: {x: 0, y: 0}
+  tractor2PlaceCoord: {x: 0, y: 0}
+  firetruckPlaceCoord: {x: 0, y: 0}
   canvas: {fileID: 1147930624}
   carSoundSource: {fileID: 1608408878}
   sounds:
@@ -1368,6 +1392,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1493,6 +1518,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fabaefe077d710d4399cb827127da32b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxZoom: 530
+  minZoom: 150
+  panSpeed: 6
+  zoomJump: 50
+  mainCamera: {fileID: 519420031}
 --- !u!1 &537506150
 GameObject:
   m_ObjectHideFlags: 0
@@ -3059,13 +3101,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1321499203}
-  m_LocalRotation: {x: -0, y: -0, z: 0.2751574, w: -0.96139926}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 726177396}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -31.943}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -111, y: 160}
@@ -4290,7 +4332,7 @@ RectTransform:
   m_GameObject: {fileID: 1991736694}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -0.8, y: -0.8, z: -0.8}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 726177396}
