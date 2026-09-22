@@ -390,6 +390,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cbe534d7df4efc24392530920bf52d30, type: 3}
   - {fileID: 8300000, guid: 04ce1e35d33224c45ac4b96c34d7bc67, type: 3}
   - {fileID: 8300000, guid: b9b07741ed3ffaa4db4f6d88c747bef4, type: 3}
+  - {fileID: 8300000, guid: 283c3b958ae321042a33774c7c6f3292, type: 3}
+  - {fileID: 8300000, guid: a2a27ad3ac203684cbc36974313f919b, type: 3}
   inRightPlace: 0
   vehicleSpots:
   - {fileID: 1276760511}
@@ -489,8 +491,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cloudPrefabs:
   - {fileID: 9139975972802455526, guid: 40fb7eab9b01a404b98146b1463b3a06, type: 3}
+  - {fileID: 5410065555294345060, guid: c8aca1f24de564f47a4faf800a87c089, type: 3}
+  - {fileID: 8696106905780413763, guid: cbc2194543eb35e4faba61cf46f3b69c, type: 3}
   planePrefabs:
   - {fileID: 2022724251165606513, guid: 7bcc35424726f2f43834e3b0049bd0fc, type: 3}
+  - {fileID: 698258046924633855, guid: 746b811e771b80c4fb738d41a47c71bd, type: 3}
   spawnPoint: {fileID: 1754610450}
   cloudSpawnInterval: 2
   planeSpawnInterval: 3
