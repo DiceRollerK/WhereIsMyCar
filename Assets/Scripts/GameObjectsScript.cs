@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -88,6 +89,7 @@ public class GameObjectsScript : MonoBehaviour
     public GameObject star2;
     public GameObject star3;
     public GameObject trophy;
+    public GameObject loss;
 
     //[HideInInspector]
     public int winCondition = 12;
@@ -102,6 +104,7 @@ public class GameObjectsScript : MonoBehaviour
     [HideInInspector]
     public int ss;
     public GameObject timer;
+    public GameObject timer2;
 
     public bool gameEnded = false;
 
@@ -207,27 +210,28 @@ public class GameObjectsScript : MonoBehaviour
             endScreen.SetActive(true);
             if (time < 180 && winCondition > 6)
             {
-                star1.SetActive(true);
+                star1.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f);
             }
             if (time < 120 && winCondition > 9)
             {
-                star2.SetActive(true);
+                star2.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f);
             }
             if (time < 60 && winCondition == 12)
             {
-                star3.SetActive(true);
+                star3.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f);
             }
             trophy.SetActive(true);
+            loss.SetActive(false);
+            timer2.GetComponent<Text>().text = hh.ToString("00") + ":" + mm.ToString("00") + ":" + ss.ToString("00");
         }
         //Skaita laiku un veido taimera grafiku
         else if (winCondition < 6 && gameEnded != true)
         {
             gameEnded = true;
             endScreen.SetActive(true);
-            star1.SetActive(false);
-            star2.SetActive(false);
-            star3.SetActive(false);
             trophy.SetActive(false);
+            loss.SetActive(true);
+            timer2.GetComponent<Text>().text = hh.ToString("00") + ":" + mm.ToString("00") + ":" + ss.ToString("00");
         }
         else if (gameEnded != true)
         {
