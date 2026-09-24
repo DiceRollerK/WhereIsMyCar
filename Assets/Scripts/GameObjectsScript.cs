@@ -1,4 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class GameObjectsScript : MonoBehaviour
 {
@@ -75,6 +78,32 @@ public class GameObjectsScript : MonoBehaviour
     public Vector2 tractor2PlaceCoord;
     [HideInInspector]
     public Vector2 firetruckPlaceCoord;
+
+    //[HideInInspector]
+    public int droppedCars;
+    //[HideInInspector]
+    public int destroyedCars;
+    public GameObject endScreen;
+    public GameObject star1;
+    public GameObject star2;
+    public GameObject star3;
+    public GameObject trophy;
+
+    //[HideInInspector]
+    public int winCondition = 12;
+    //[HideInInspector]
+    public int placed = 0;
+
+    public float time = 0.0f;
+    [HideInInspector]
+    public int hh;
+    [HideInInspector]
+    public int mm;
+    [HideInInspector]
+    public int ss;
+    public GameObject timer;
+
+    public bool gameEnded = false;
 
     public Canvas canvas;
     public AudioSource carSoundSource;
@@ -167,5 +196,69 @@ public class GameObjectsScript : MonoBehaviour
             numbers[r] = tmp;
         }
         return numbers;
+    }
+
+    void Update()
+    {
+        //Uzvaras ekrāns
+        if (placed == winCondition && gameEnded != true)
+        {
+            gameEnded = true;
+            endScreen.SetActive(true);
+            if (time < 180 && winCondition > 6)
+            {
+                star1.SetActive(true);
+            }
+            if (time < 120 && winCondition > 9)
+            {
+                star2.SetActive(true);
+            }
+            if (time < 60 && winCondition == 12)
+            {
+                star3.SetActive(true);
+            }
+            trophy.SetActive(true);
+        }
+        //Skaita laiku un veido taimera grafiku
+        else if (winCondition < 6 && gameEnded != true)
+        {
+            gameEnded = true;
+            endScreen.SetActive(true);
+            star1.SetActive(false);
+            star2.SetActive(false);
+            star3.SetActive(false);
+            trophy.SetActive(false);
+        }
+        else if (gameEnded != true)
+        {
+            time += Time.deltaTime;
+            //Formatē laiku
+            if (time < 3600)
+            {
+                hh = 0;
+            }
+            else
+            {
+                hh = (int)time / 3600;
+            }
+            if (time < 60)
+            {
+                mm = 0;
+            }
+            else
+            {
+
+                if (time < 3600)
+                {
+                    mm = (int)time / 60;
+                }
+                else
+                {
+                    mm = (int)(time - 3600 * hh) / 60;
+                }
+            }
+            ss = (int)time - hh * 3600 - mm * 60;
+            timer.GetComponent<Text>().text = hh.ToString("00") + ":" + mm.ToString("00") + ":" + ss.ToString("00");
+        }
     }
 }

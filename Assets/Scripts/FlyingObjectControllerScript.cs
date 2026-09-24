@@ -78,6 +78,7 @@ public class FlyingObjectControllerScript : MonoBehaviour
                 StartCoroutine(ShrinkAndDestroy(GameObjectsScript.lastDragged, 0.5f));
                 GameObjectsScript.lastDragged = null;
                 GameObjectsScript.isDragging = false;
+                gameObjectsScript.winCondition--;
             }
 
             if(CompareTag("Bomb"))
