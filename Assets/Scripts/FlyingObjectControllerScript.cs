@@ -50,42 +50,46 @@ public class FlyingObjectControllerScript : MonoBehaviour
 
     private void Update()
     {
-        float waveOffset = Mathf.Sin(Time.time * waveFrequency) * waveAmplitude;
-        rectTransform.anchoredPosition += new Vector2(-speed * Time.deltaTime, waveOffset * Time.deltaTime);
-        if (speed > 0 && transform.position.x < (screenBoundariesScript.minX+80) && !isFadingOut)
+        if (!gameObjectsScript.gameEnded)
         {
-            StartCoroutine(FadeOutAndDestroy());
-            isFadingOut = false;
-        };
-        if (speed < 0 && transform.position.x > (screenBoundariesScript.maxX - 80) && !isFadingOut)
-        {
-            StartCoroutine(FadeOutAndDestroy());
-            isFadingOut = true;
-        };
-
-        if (CompareTag("Bomb") && !isExploding && RectTransformUtility.RectangleContainsScreenPoint(rectTransform, Input.mousePosition, Camera.main))
-        {
-            Debug.Log("The cursor collided with a bomb!");
-            TriggerExplosion();
-        };
-
-        if(GameObjectsScript.isDragging && !isFadingOut && RectTransformUtility.RectangleContainsScreenPoint(rectTransform, Input.mousePosition, Camera.main))
-        {
-            Debug.Log("The cursor collided with a flying object!");
-            if(GameObjectsScript.lastDragged != null)
+            float waveOffset = Mathf.Sin(Time.time * waveFrequency) * waveAmplitude;
+            rectTransform.anchoredPosition += new Vector2(-speed * Time.deltaTime, waveOffset * Time.deltaTime);
+            if (speed > 0 && transform.position.x < (screenBoundariesScript.minX + 80) && !isFadingOut)
             {
-                StartCoroutine(ShrinkAndDestroy(GameObjectsScript.lastDragged, 0.5f));
-                GameObjectsScript.lastDragged = null;
-                GameObjectsScript.isDragging = false;
-                gameObjectsScript.winCondition--;
-            }
+                StartCoroutine(FadeOutAndDestroy());
+                isFadingOut = false;
+            };
+            if (speed < 0 && transform.position.x > (screenBoundariesScript.maxX - 80) && !isFadingOut)
+            {
+                StartCoroutine(FadeOutAndDestroy());
+                isFadingOut = true;
+            };
 
-            if(CompareTag("Bomb"))
+            if (CompareTag("Bomb") && !isExploding && RectTransformUtility.RectangleContainsScreenPoint(rectTransform, Input.mousePosition, Camera.main))
             {
-                StartAndDestroy(Color.red);
-            } else
+                Debug.Log("The cursor collided with a bomb!");
+                TriggerExplosion();
+            };
+
+            if (GameObjectsScript.isDragging && !isFadingOut && RectTransformUtility.RectangleContainsScreenPoint(rectTransform, Input.mousePosition, Camera.main))
             {
-                StartAndDestroy(Color.cyan);
+                Debug.Log("The cursor collided with a flying object!");
+                if (GameObjectsScript.lastDragged != null)
+                {
+                    StartCoroutine(ShrinkAndDestroy(GameObjectsScript.lastDragged, 0.5f));
+                    GameObjectsScript.lastDragged = null;
+                    GameObjectsScript.isDragging = false;
+                    gameObjectsScript.winCondition--;
+                }
+
+                if (CompareTag("Bomb"))
+                {
+                    StartAndDestroy(Color.red);
+                }
+                else
+                {
+                    StartAndDestroy(Color.cyan);
+                }
             }
         }
     }

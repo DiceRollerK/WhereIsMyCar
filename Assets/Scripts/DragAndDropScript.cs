@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -23,7 +24,7 @@ public class DragAndDropScript : MonoBehaviour,
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(Input.GetMouseButton(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2))
+        if(Input.GetMouseButton(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2) && !gameObjectsScript.gameEnded)
         {
             Debug.Log("Left mouse button clicked on " + gameObject.name);
             gameObjectsScript.carSoundSource.PlayOneShot(gameObjectsScript.sounds[0]);
@@ -31,7 +32,7 @@ public class DragAndDropScript : MonoBehaviour,
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (Input.GetMouseButton(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2))
+        if (Input.GetMouseButton(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2) && !gameObjectsScript.gameEnded)
         {
             GameObjectsScript.isDragging = true;
             canvasGroup.alpha = 0.6f;
@@ -52,7 +53,7 @@ public class DragAndDropScript : MonoBehaviour,
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (Input.GetMouseButton(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2))
+        if (Input.GetMouseButton(0) && !Input.GetMouseButton(1) && !Input.GetMouseButton(2) && !gameObjectsScript.gameEnded)
         {
             Vector3 cursScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenBoundariesScript.screenPoint.z);
             Vector3 curPosition = Camera.main.ScreenToWorldPoint(cursScreenPoint) + screenBoundariesScript.offset;
@@ -63,7 +64,7 @@ public class DragAndDropScript : MonoBehaviour,
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if(!Input.GetMouseButton(0))
+        if(!Input.GetMouseButton(0) && !gameObjectsScript.gameEnded)
         {
             GameObjectsScript.isDragging = false;
             Debug.Log("OnEndDrag called for" + gameObject.name);
@@ -78,17 +79,5 @@ public class DragAndDropScript : MonoBehaviour,
 
             gameObjectsScript.inRightPlace = false;
         }
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

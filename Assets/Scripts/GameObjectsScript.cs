@@ -121,6 +121,8 @@ public class GameObjectsScript : MonoBehaviour
     [HideInInspector]
     public int[] spots = new int[17];
 
+    public GameObject spawnPoint;
+
     void Awake()
     {
         
@@ -223,6 +225,7 @@ public class GameObjectsScript : MonoBehaviour
             trophy.SetActive(true);
             loss.SetActive(false);
             timer2.GetComponent<Text>().text = hh.ToString("00") + ":" + mm.ToString("00") + ":" + ss.ToString("00");
+            spawnPoint.SetActive(false);
         }
         //Skaita laiku un veido taimera grafiku
         else if (winCondition < 6 && gameEnded != true)
@@ -232,6 +235,7 @@ public class GameObjectsScript : MonoBehaviour
             trophy.SetActive(false);
             loss.SetActive(true);
             timer2.GetComponent<Text>().text = hh.ToString("00") + ":" + mm.ToString("00") + ":" + ss.ToString("00");
+            spawnPoint.SetActive(false);
         }
         else if (gameEnded != true)
         {
