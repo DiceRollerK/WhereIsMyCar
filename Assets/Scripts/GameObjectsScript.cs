@@ -1,8 +1,5 @@
-﻿using Unity.VisualScripting;
-using UnityEngine;
-using UnityEngine.Audio;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class GameObjectsScript : MonoBehaviour
 {
@@ -123,6 +120,8 @@ public class GameObjectsScript : MonoBehaviour
 
     public GameObject spawnPoint;
 
+    public GameObject healthBar;
+
     void Awake()
     {
         
@@ -226,6 +225,7 @@ public class GameObjectsScript : MonoBehaviour
             loss.SetActive(false);
             timer2.GetComponent<Text>().text = hh.ToString("00") + ":" + mm.ToString("00") + ":" + ss.ToString("00");
             spawnPoint.SetActive(false);
+            healthBar.SetActive(false);
         }
         //Skaita laiku un veido taimera grafiku
         else if (winCondition < 6 && gameEnded != true)
@@ -236,6 +236,7 @@ public class GameObjectsScript : MonoBehaviour
             loss.SetActive(true);
             timer2.GetComponent<Text>().text = hh.ToString("00") + ":" + mm.ToString("00") + ":" + ss.ToString("00");
             spawnPoint.SetActive(false);
+            healthBar.SetActive(false);
         }
         else if (gameEnded != true)
         {
@@ -267,6 +268,7 @@ public class GameObjectsScript : MonoBehaviour
             }
             ss = (int)time - hh * 3600 - mm * 60;
             timer.GetComponent<Text>().text = hh.ToString("00") + ":" + mm.ToString("00") + ":" + ss.ToString("00");
+            healthBar.GetComponent<Slider>().value = winCondition - 5;
         }
     }
 }
