@@ -10,6 +10,11 @@ public class SceneChangeScript : MonoBehaviour
         audioSource.PlayOneShot(click);
         SceneManager.LoadScene("CityScene");
     }
+    public void MainMenu()
+    {
+        audioSource.PlayOneShot(click);
+        SceneManager.LoadScene("MainMenu");
+    }
     public void ExitGame()
     {
         audioSource.PlayOneShot(click);
