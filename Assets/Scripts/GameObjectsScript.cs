@@ -188,6 +188,19 @@ public class GameObjectsScript : MonoBehaviour
         tractorPlace.transform.position = tractorPlaceCoord;
         tractor2Place.transform.position = tractor2PlaceCoord;
         firetruckPlace.transform.position = firetruckPlaceCoord;
+
+        Randomize(garbageTruck.GetComponent<RectTransform>());
+        Randomize(medicine.GetComponent<RectTransform>());
+        Randomize(schoolBus.GetComponent<RectTransform>());
+        Randomize(car.GetComponent<RectTransform>());
+        Randomize(cementTruck.GetComponent<RectTransform>());
+        Randomize(car2.GetComponent<RectTransform>());
+        Randomize(car3.GetComponent<RectTransform>());
+        Randomize(excavator.GetComponent<RectTransform>());
+        Randomize(police.GetComponent<RectTransform>());
+        Randomize(tractor.GetComponent<RectTransform>());
+        Randomize(tractor2.GetComponent<RectTransform>());
+        Randomize(firetruck.GetComponent<RectTransform>());
     }
 
     int[] shuffle(int[] numbers)
@@ -200,6 +213,16 @@ public class GameObjectsScript : MonoBehaviour
             numbers[r] = tmp;
         }
         return numbers;
+    }
+
+    void Randomize(RectTransform carObject)
+    {
+        int number = 0;
+        while (number == 0) {
+            number = Random.Range(-1, 2);
+        }
+        carObject.localScale = new Vector3(Random.Range(0.3f, 0.9f) * number, Random.Range(0.3f, 0.9f), 1f);
+        carObject.Rotate(0, 0, Random.Range(-180.0f, 180.0f));
     }
 
     void Update()
