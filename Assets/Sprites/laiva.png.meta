@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      laiva_0: -6308816952547486403
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
