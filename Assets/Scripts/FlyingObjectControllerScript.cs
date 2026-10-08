@@ -54,24 +54,35 @@ public class FlyingObjectControllerScript : MonoBehaviour
         {
             float waveOffset = Mathf.Sin(Time.time * waveFrequency) * waveAmplitude;
             rectTransform.anchoredPosition += new Vector2(-speed * Time.deltaTime, waveOffset * Time.deltaTime);
-            if (speed > 0 && transform.position.x < (screenBoundariesScript.minX + 80) && !isFadingOut)
+            if (speed > 0 && transform.position.x < (screenBoundariesScript.worldBounds.xMin + 80) && !isFadingOut)
             {
                 StartCoroutine(FadeOutAndDestroy());
                 isFadingOut = false;
             };
-            if (speed < 0 && transform.position.x > (screenBoundariesScript.maxX - 80) && !isFadingOut)
+            if (speed < 0 && transform.position.x > (screenBoundariesScript.worldBounds.xMax - 80) && !isFadingOut)
             {
                 StartCoroutine(FadeOutAndDestroy());
                 isFadingOut = true;
             };
 
-            if (CompareTag("Bomb") && !isExploding && RectTransformUtility.RectangleContainsScreenPoint(rectTransform, Input.mousePosition, Camera.main))
+            // For Android
+            Vector2 inputPosition;
+            if(!TryGetInputPosition(out inputPosition))
+            {
+                return;
+            }
+            if(inputPosition.x < 0 || inputPosition.x > Screen.width || inputPosition.y < 0 || inputPosition.y > Screen.height || Camera.main == null)
+            {
+                return;
+            }
+
+            if (CompareTag("Bomb") && !isExploding && RectTransformUtility.RectangleContainsScreenPoint(rectTransform, inputPosition, Camera.main))
             {
                 Debug.Log("The cursor collided with a bomb!");
                 TriggerExplosion();
-            };
+            }
 
-            if (GameObjectsScript.isDragging && !isFadingOut && RectTransformUtility.RectangleContainsScreenPoint(rectTransform, Input.mousePosition, Camera.main))
+            if (GameObjectsScript.isDragging && !isFadingOut && RectTransformUtility.RectangleContainsScreenPoint(rectTransform, inputPosition, Camera.main))
             {
                 Debug.Log("The cursor collided with a flying object!");
                 if (GameObjectsScript.lastDragged != null)
@@ -92,6 +103,24 @@ public class FlyingObjectControllerScript : MonoBehaviour
                 }
             }
         }
+    }
+
+    bool TryGetInputPosition(out Vector2 inputPosition)
+    {
+        #if UNITY_EDITOR || UNITY_STANDALONE
+                inputPosition = Input.mousePosition;
+                return true;
+        #elif UNITY_ANDROID
+                if (input.touchCount > 0) 
+                {
+                    inputPosition = Input.GetTouch(0).position;
+                    return true;
+                } else {
+                    inputPosition = Vector2.zero;
+                    return false;
+                }
+
+        #endif
     }
 
     IEnumerator ShrinkAndDestroy(GameObject obj, float duration)
@@ -147,6 +176,9 @@ public class FlyingObjectControllerScript : MonoBehaviour
 
     IEnumerator Vibrate()
     {
+        #if UNITY_ANDROID
+            Handheld.Vibrate();
+        #endif
         Vector2 originalPos = rectTransform.anchoredPosition;
         float duration = 0.4f;
         float elapsed = 0f;
