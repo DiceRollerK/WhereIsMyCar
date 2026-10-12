@@ -517,10 +517,10 @@ MonoBehaviour:
   offset: {x: 0, y: 0, z: 0}
   worldBounds:
     serializedVersion: 2
-    x: -10
-    y: -5
-    width: 20
-    height: 10
+    x: -960
+    y: -540
+    width: 1920
+    height: 1080
   reductionFactor: 0.02
   mainCamera: {fileID: 0}
 --- !u!114 &107403731

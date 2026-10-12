@@ -19,7 +19,6 @@ public class CameraZoomScript : MonoBehaviour
     public ScreenBoundariesScript screenBoundariesScript;
 
     public Camera mainCamera;
-    float startZoom;
     Vector2 lastTouchPos;
     int panFingerId = -1;
     bool isTouchPan = false;
@@ -42,7 +41,6 @@ public class CameraZoomScript : MonoBehaviour
 
     private void Start()
     {
-        startZoom = mainCamera.orthographicSize;
         screenBoundariesScript.RecalculateBounds();
         transform.position = screenBoundariesScript.GetClampedCameraPosition(transform.position);
     }
@@ -71,7 +69,7 @@ public class CameraZoomScript : MonoBehaviour
         UpdateMaxZoom();
         mainCamera.orthographicSize = Mathf.Clamp(mainCamera.orthographicSize, minZoom, maxZoom);
         screenBoundariesScript.RecalculateBounds();
-        transform.position = screenBoundariesScript.GetClampedPosition(transform.position);
+        transform.position = screenBoundariesScript.GetClampedCameraPosition(transform.position);
     }
 
     void DesktopFollowCursor()
@@ -89,7 +87,7 @@ public class CameraZoomScript : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, targetPosition, mouseFollowSpeed * Time.unscaledDeltaTime);
     }
 
-    void HandlePinch()
+    void HandleTouch()
     {
         if (Input.touchCount != 1)
         {
@@ -130,6 +128,16 @@ public class CameraZoomScript : MonoBehaviour
         }
     }
 
+    void HandlePinch()
+    {
+        Touch touch0 = Input.GetTouch(0);
+        Touch touch1 = Input.GetTouch(1);
+        float prevDistance = ((touch0.position - touch0.deltaPosition) - (touch1.position - touch1.deltaPosition)).magnitude;
+
+        float currentDistance = (touch0.position - touch1.position).magnitude;
+        mainCamera.orthographicSize -= (currentDistance - prevDistance) * pinchZoomSpeed;
+    }
+
     bool IsTouchUIButton(Vector2 touchPosition)
     {
         PointerEventData pointerData = new PointerEventData(EventSystem.current);
@@ -165,13 +173,13 @@ public class CameraZoomScript : MonoBehaviour
             elapsed += Time.unscaledDeltaTime;
             mainCamera.orthographicSize = Mathf.Lerp(currentZoom, targetZoom, elapsed / duration);
             screenBoundariesScript.RecalculateBounds();
-            transform.position = screenBoundariesScript.GetClampedPosition(transform.position);
+            transform.position = screenBoundariesScript.GetClampedCameraPosition(transform.position);
             yield return null;
         }
 
         mainCamera.orthographicSize = targetZoom;
         screenBoundariesScript.RecalculateBounds();
-        transform.position = screenBoundariesScript.GetClampedPosition(transform.position);
+        transform.position = screenBoundariesScript.GetClampedCameraPosition(transform.position);
     }
 
     void UpdateMaxZoom()
