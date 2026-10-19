@@ -16,8 +16,10 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
     }
     public void OnDrop(PointerEventData eventData)
     {
-        if((eventData.pointerDrag != null) && Input.GetMouseButtonUp(0) && (!Input.GetMouseButton(2)))
+        if (eventData.pointerDrag == null)
         {
+            return;
+        }
             if(eventData.pointerDrag.tag.Equals(tag))
             {
                 placeZRot = eventData.pointerDrag.GetComponent<RectTransform>().transform.eulerAngles.z;
@@ -144,7 +146,5 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
                         break;
                 }
             }
-
-        }
     }
 }
