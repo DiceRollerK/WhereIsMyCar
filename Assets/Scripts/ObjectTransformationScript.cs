@@ -5,7 +5,7 @@ public class ObjectTransformationScript : MonoBehaviour
 {
     public float rotationSpeed = 90f;
     public float scaleSpeed = 0.5f;
-    private bool rotateCW, rotateCCW, scaleUpY, scaleDownY, scaleUpX, scaleDownX, flip;
+    private bool rotateCW, rotateCCW, scaleUpY, scaleDownY, scaleUpX, scaleDownX, flipped;
     public static bool isTransforming = false;
 
 
@@ -48,26 +48,32 @@ public class ObjectTransformationScript : MonoBehaviour
             rc.localScale -= new Vector3(scaleSpeed * Time.deltaTime, 0, 0);
         }
 
-        if (flip)
+        if (flipped)
         {
             rc.localScale = new Vector3(rc.localScale.x * -1, rc.localScale.y, 1f);
-            flip = false;
+            flipped = false;
         }
 
-        isTransforming = rotateCW || rotateCCW || scaleUpY || scaleDownY || scaleUpX || scaleDownX || flip;
+        isTransforming = rotateCW || rotateCCW || scaleUpY || scaleDownY || scaleUpX || scaleDownX || flipped;
     }
 
     public void StartRotateCW() { rotateCW = true; }
     public void StopRotateCW() { rotateCW = false; }
+
     public void StartRotateCCW() { rotateCCW = true; }
     public void StopRotateCCW() { rotateCCW = false; }
+
     public void StartScaleUpY() { scaleUpY = true; }
     public void StopScaleUpY() { scaleUpY = false; }
+
     public void StartScaleDownY() { scaleDownY = true; }
     public void StopScaleDownY() { scaleDownY = false; }
+
     public void StartScaleUpX() { scaleUpX = true; }
     public void StopScaleUpX() { scaleUpX = false; }
+
     public void StartScaleDownX() { scaleDownX = true; }
     public void StopScaleDownX() { scaleDownX = false; }
-    public void StartFlip() { flip = true; }
+
+    public void flip() { flipped = true; }
 }

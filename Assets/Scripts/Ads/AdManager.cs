@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class AdManager : MonoBehaviour
 {
@@ -8,10 +10,86 @@ public class AdManager : MonoBehaviour
     private bool firstAdShown = false;
 
     public static AdManager Instance { get; private set; }
+
+    private bool firstSceneLoaded = false;
     
     // Turpināsim
     private void Awake()
     {
-        
+        if(adsIntializer == null)
+        {
+            adsIntializer = FindFirstObjectByType<AdsInitializer>();
+        }
+
+        if(Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        adsIntializer.OnAdsInitialized += HandleAdsInitialized;
+    }
+
+    private void HandleAdsInitialized()
+    {
+        if (!turnOffInterstitialAds)
+        {
+            interstitialAd.OnInterstitialAdReady += HandleInterstitialReady;
+            interstitialAd.LoadAd();
+        }
+
+        //Vēlāk papildināsim priekš pārējām reklāmām
+    }
+
+    private void HandleInterstitialReady()
+    {
+        if(!firstAdShown)
+        {
+            Debug.Log("Showing interstitial ad for the first time!");
+            interstitialAd.ShowAd();
+            firstAdShown = true;
+        } else
+        {
+            Debug.Log("Interstitial ad is ready to be shown again!");
+            interstitialAd.ShowAd();
+        }
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if(interstitialAd == null)
+        {
+            interstitialAd = FindFirstObjectByType<InterstitialAd>();
+        }
+
+        Button interstitialButton = GameObject.FindGameObjectWithTag("InterstitialAdButton").GetComponent<Button>();
+        if(interstitialAd != null && interstitialButton != null)
+        {
+            interstitialAd.SetButton(interstitialButton);
+        }
+
+        //Vēlāk jāpapildina ar pārējām pogām
+
+        if(!firstSceneLoaded)
+        {
+            firstSceneLoaded = true;
+            Debug.Log("First scene loaded!");
+            return;
+        }
+
+        Debug.Log("Scene reloaded!");
+        HandleAdsInitialized();
     }
 }
