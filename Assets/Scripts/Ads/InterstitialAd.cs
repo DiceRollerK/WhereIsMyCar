@@ -77,7 +77,7 @@ public class InterstitialAd : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSho
         Debug.Log("Interstitial ad loaded successfully!");
         _interstitalAdButton.interactable = true;
         isReady = true;
-        //OnInterstitialAdReady?.Invoke();
+        OnInterstitialAdReady?.Invoke();
     }
 
     public void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message)
