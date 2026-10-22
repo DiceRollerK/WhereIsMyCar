@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class InterstitialAd : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
 {
-    [SerializeField] string _androidAdUnitID = "Interstitial_Android";
+    [SerializeField] string _androidAdUnitID = "BP_Interstitial_Android";
     string _adUnitId;
     public event Action OnInterstitialAdReady;
     public bool isReady = false;
@@ -48,7 +48,10 @@ public class InterstitialAd : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSho
     {
         if(isReady)
         {
-            // Papildināsim priekš banner ad
+            if(AdManager.Instance.bannerAd.isBannerVisible)
+            {
+                AdManager.Instance.bannerAd.HideBannerAd();
+            }
 
             Advertisement.Show(_adUnitId, this);
             isReady = false;
@@ -74,7 +77,7 @@ public class InterstitialAd : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSho
         Debug.Log("Interstitial ad loaded successfully!");
         _interstitalAdButton.interactable = true;
         isReady = true;
-        OnInterstitialAdReady?.Invoke();
+        //OnInterstitialAdReady?.Invoke();
     }
 
     public void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message)

@@ -2409,7 +2409,7 @@ Camera:
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 4
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -4798,7 +4798,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &1147930625
 RectTransform:
@@ -4941,7 +4941,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1204547904}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5284,7 +5284,7 @@ GameObject:
   - component: {fileID: 1288060969}
   m_Layer: 5
   m_Name: RewardedAd
-  m_TagString: Untagged
+  m_TagString: RewardedAdButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5404,7 +5404,7 @@ GameObject:
   - component: {fileID: 1316022492}
   m_Layer: 5
   m_Name: BannerAd
-  m_TagString: Untagged
+  m_TagString: BannerAdButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5957,12 +5957,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1200, y: 1200}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -5989,7 +5989,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!224 &1447388750
 RectTransform:
@@ -6201,6 +6201,9 @@ GameObject:
   - component: {fileID: 1500670181}
   - component: {fileID: 1500670184}
   - component: {fileID: 1500670183}
+  - component: {fileID: 1500670186}
+  - component: {fileID: 1500670185}
+  - component: {fileID: 1500670187}
   m_Layer: 0
   m_Name: AdsScriptHolder
   m_TagString: Untagged
@@ -6249,7 +6252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13368b6a7e383c04890804c1cb86a6f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _androidAdUnitID: Interstitial_Android
+  _androidAdUnitID: BP_Interstitial_Android
   isReady: 0
   _interstitalAdButton: {fileID: 569869002}
 --- !u!114 &1500670184
@@ -6264,9 +6267,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b021473e63adb8f4e822500b8ae6b7fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  adsIntializer: {fileID: 1500670181}
+  adsInitializer: {fileID: 0}
   interstitialAd: {fileID: 1500670183}
   turnOffInterstitialAds: 0
+  rewardedAds: {fileID: 1500670186}
+  turnOffRewardedAds: 0
+  bannerAd: {fileID: 1500670187}
+  turnOffBannerAds: 0
+--- !u!114 &1500670185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500670180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 188921d66ceaf2a408b434fb63d3b3d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1500670186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500670180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8bf904d2ae462942a7c5a2736705a19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _androidAdUnitId: BP_Rewarded_Android
+  _rewardedAdButton: {fileID: 1288060969}
+  flyingObjectManager: {fileID: 1500670185}
+--- !u!114 &1500670187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500670180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88bdb039ce003242a40839980850250, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _androidAdUnitId: BP_Banner_Android
+  _bannerButton: {fileID: 1316022492}
+  isBannerVisible: 0
+  _bannerPosition: 3
 --- !u!1 &1502733214
 GameObject:
   m_ObjectHideFlags: 0

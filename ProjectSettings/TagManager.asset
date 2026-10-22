@@ -18,6 +18,8 @@ TagManager:
   - Firetruck
   - Bomb
   - InterstitialAdButton
+  - RewardedAdButton
+  - BannerAdButton
   layers:
   - Default
   - TransparentFX
