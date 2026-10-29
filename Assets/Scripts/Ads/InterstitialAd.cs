@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Advertisements;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class InterstitialAd : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
@@ -10,8 +11,8 @@ public class InterstitialAd : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSho
     string _adUnitId;
     public event Action OnInterstitialAdReady;
     public bool isReady = false;
-    [SerializeField] Button _interstitalAdButton;
-
+    //[SerializeField] Button _interstitalAdButton;
+    string scene = null;
     void Awake()
     {
         _adUnitId = _androidAdUnitID;
@@ -19,17 +20,21 @@ public class InterstitialAd : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSho
 
     private void Update()
     {
-        if(AdManager.Instance != null && AdManager.Instance.interstitialAd != null)
+        /*
+        if(AdManager.Instance != null && AdManager.Instance.interstitialAd != null && _interstitalAdButton != null)
         {
             _interstitalAdButton.interactable = AdManager.Instance.interstitialAd.isReady;
         }
+        */
     }
 
+    /*
     public void OnInterstitialAdButtonClicked()
     {
         Debug.Log("Interstitial Ad Button Clicked");
         ShowInterstitial();
     }
+    */
 
     public void ShowInterstitial()
     {
@@ -48,7 +53,7 @@ public class InterstitialAd : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSho
     {
         if(isReady)
         {
-            if(AdManager.Instance.bannerAd.isBannerVisible)
+            if(AdManager.Instance.bannerAd != null)
             {
                 AdManager.Instance.bannerAd.HideBannerAd();
             }
@@ -56,6 +61,25 @@ public class InterstitialAd : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSho
             Advertisement.Show(_adUnitId, this);
             isReady = false;
         } else
+        {
+            Debug.LogWarning("Interstitial ad is not ready yet!");
+        }
+    }
+
+    public void ShowAd(String sceneName)
+    {
+        if (isReady)
+        {
+            if (AdManager.Instance.bannerAd != null)
+            {
+                AdManager.Instance.bannerAd.HideBannerAd();
+            }
+
+            Advertisement.Show(_adUnitId, this);
+            isReady = false;
+            scene = sceneName;
+        }
+        else
         {
             Debug.LogWarning("Interstitial ad is not ready yet!");
         }
@@ -75,7 +99,12 @@ public class InterstitialAd : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSho
     public void OnUnityAdsAdLoaded(string placementId)
     {
         Debug.Log("Interstitial ad loaded successfully!");
-        _interstitalAdButton.interactable = true;
+        /*
+        if (_interstitalAdButton != null)
+        {
+            _interstitalAdButton.interactable = true;
+        }
+        */
         isReady = true;
         OnInterstitialAdReady?.Invoke();
     }
@@ -93,19 +122,11 @@ public class InterstitialAd : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSho
 
     public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
     {
-        if(showCompletionState == UnityAdsShowCompletionState.COMPLETED)
-        {
-            Debug.Log("Interstitial ad completed successfully!");
-            StartCoroutine(SlowDownTimeTemporarily(30f));
-            LoadAd();
-        } else
-        {
-            Debug.LogWarning($"Interstitial ad was not completed: {showCompletionState.ToString()}");
-            Time.timeScale = 1f;
-            LoadAd();
-        }
-    }
 
+        Debug.Log($"Interstitial finished: {showCompletionState}");
+        GoToPendingScene();
+    }
+    /*
     private IEnumerator SlowDownTimeTemporarily(float duration)
     {
         Time.timeScale = 0.3f;
@@ -114,11 +135,12 @@ public class InterstitialAd : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSho
         Time.timeScale = 1f;
         Debug.Log("Time restored to normal.");
     }
+    */
 
     public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)
     {
         Debug.LogError($"Failed to show interstitial ad: {error.ToString()} - {message}");
-        LoadAd();
+        GoToPendingScene();
     }
 
     public void OnUnityAdsShowStart(string placementId)
@@ -126,7 +148,7 @@ public class InterstitialAd : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSho
         Debug.Log("Interstitial ad started showing!");
         Time.timeScale = 0;
     }
-
+    /*
     public void SetButton(Button button)
     {
         if (button == null)
@@ -138,5 +160,18 @@ public class InterstitialAd : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSho
         button.onClick.AddListener(OnInterstitialAdButtonClicked);
         _interstitalAdButton = button;
         _interstitalAdButton.interactable = false;
+    }
+    */
+
+    void GoToPendingScene()
+    {
+        Time.timeScale = 1f;
+        string target = scene;
+        scene = null;
+        if (target != null)
+        {
+            SceneManager.LoadScene(target);
+        }
+        LoadAd();
     }
 }

@@ -653,7 +653,7 @@ MonoBehaviour:
     y: -540
     width: 1920
     height: 1080
-  reductionFactor: 0.02
+  reductionFactor: 0.05
   mainCamera: {fileID: 0}
 --- !u!114 &107403731
 MonoBehaviour:
@@ -2636,7 +2636,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &569869001
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4185,7 +4185,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 52.89624}
+  m_AnchoredPosition: {x: 0, y: 91.1}
   m_SizeDelta: {x: 445.86, y: 75.831055}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &977828159
@@ -5261,7 +5261,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -389.70026, y: 1677.0933}
+  m_AnchoredPosition: {x: -389.70026, y: 1797.24}
   m_SizeDelta: {x: 160, y: 135}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1288060969
@@ -5364,7 +5364,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1316022491
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6199,7 +6199,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _androidAdUnitID: BP_Interstitial_Android
   isReady: 0
-  _interstitalAdButton: {fileID: 569869002}
 --- !u!114 &1500670184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6212,13 +6211,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b021473e63adb8f4e822500b8ae6b7fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  adsInitializer: {fileID: 0}
+  adsInitializer: {fileID: 1500670181}
   interstitialAd: {fileID: 1500670183}
   turnOffInterstitialAds: 0
   rewardedAds: {fileID: 1500670186}
   turnOffRewardedAds: 0
   bannerAd: {fileID: 1500670187}
   turnOffBannerAds: 0
+  rewardedAdButton: {fileID: 0}
 --- !u!114 &1500670185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6260,8 +6260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _androidAdUnitId: BP_Banner_Android
   _bannerButton: {fileID: 1316022492}
-  isBannerVisible: 0
-  _bannerPosition: 3
+  _bannerPosition: 4
 --- !u!1 &1502733214
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,19 +5,33 @@ public class SceneChangeScript : MonoBehaviour
 {
     public AudioSource audioSource;
     public AudioClip click;
+
     public void CityScene()
     {
-        audioSource.PlayOneShot(click);
-        SceneManager.LoadScene("CityScene");
+        ChangeScene("CityScene");
     }
     public void MainMenu()
     {
-        audioSource.PlayOneShot(click);
-        SceneManager.LoadScene("MainMenu");
+        ChangeScene("MainMenu");
     }
+
+    void ChangeScene(string sceneName)
+    {
+        if (audioSource != null)
+        {
+            audioSource.PlayOneShot(click);
+        }
+        InterstitialAd ad = AdManager.Instance != null ? AdManager.Instance.interstitialAd : null;
+
+        if (ad != null && ad.isReady)
+            ad.ShowAd(sceneName);               
+        else
+            SceneManager.LoadScene(sceneName);  
+    }
+
     public void ExitGame()
     {
-        audioSource.PlayOneShot(click);
+        if (audioSource != null) audioSource.PlayOneShot(click);
         Application.Quit();
     }
 }

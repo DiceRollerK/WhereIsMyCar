@@ -38,13 +38,16 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
 
         if(placementId.Equals(_adUnitId))
         {
-            _rewardedAdButton.interactable = true;
+            if (_rewardedAdButton != null)
+            {
+                _rewardedAdButton.interactable = true;
+            }
         }
     }
 
     public void ShowAd()
     {
-        //Vēlāk jāpaslēpj banner ad
+        AdManager.Instance.bannerAd.HideBannerAd();
         _rewardedAdButton.interactable = false;
         Advertisement.Show(_adUnitId, this);
     }
@@ -57,12 +60,17 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
 
     private IEnumerator WaitAndLoadAd(float delay)
     {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSecondsRealtime(delay);
         LoadAd();
     }
 
     public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)
     {
+        Time.timeScale = 1f;
+        if (AdManager.Instance.bannerAd != null)
+        {
+            AdManager.Instance.bannerAd.ShowBannerAd();
+        }
         Debug.Log($"Error showing rewarded ad: {placementId} : {error.ToString()} - {message}");
         StartCoroutine(WaitAndLoadAd(10f));
     }
@@ -79,14 +87,20 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
 
     public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
     {
-        if(placementId.Equals(_adUnitId) && showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
+        if (!placementId.Equals(_adUnitId))
+        {
+            return;
+        }
+        Time.timeScale = 1f;
+        if(showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
         {
             Debug.Log("Rewarded ad completed!");
             flyingObjectManager.DestroyAllFlyingObjects();
             _rewardedAdButton.interactable = false;
-            StartCoroutine(WaitAndLoadAd(15f));
+            StartCoroutine(SlowDownTimeTemporarily(10f));
         }
-        Time.timeScale = 1f;
+        AdManager.Instance.bannerAd.ShowBannerAd();
+        StartCoroutine(WaitAndLoadAd(15f));
     }
 
     public void SetButton(Button button)
@@ -100,5 +114,14 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
         button.onClick.AddListener(ShowAd);
         _rewardedAdButton = button;
         _rewardedAdButton.interactable = false;
+    }
+
+    private IEnumerator SlowDownTimeTemporarily(float duration)
+    {
+        Time.timeScale = 0.3f;
+        Debug.Log("Time slowed down for " + duration + " seconds.");
+        yield return new WaitForSecondsRealtime(duration);
+        Time.timeScale = 1f;
+        Debug.Log("Time restored to normal.");
     }
 }

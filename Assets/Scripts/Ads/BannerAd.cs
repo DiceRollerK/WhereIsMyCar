@@ -8,9 +8,9 @@ public class BannerAd : MonoBehaviour
     string _adUnitId;
 
     [SerializeField] Button _bannerButton;
-    public bool isBannerVisible = false;
+    //public bool isBannerVisible = false;
 
-    [SerializeField] BannerPosition _bannerPosition = BannerPosition.BOTTOM_LEFT;
+    [SerializeField] BannerPosition _bannerPosition = BannerPosition.BOTTOM_CENTER;
 
     void Awake()
     {
@@ -38,7 +38,11 @@ public class BannerAd : MonoBehaviour
     void OnBannerLoaded()
     {
         Debug.Log("Banner ad loaded!");
-        _bannerButton.interactable = true;
+        if (_bannerButton != null)
+        {
+            _bannerButton.interactable = true;
+        }
+        ShowBannerAd();
     }
 
     void OnBannerError(string message)
@@ -49,19 +53,13 @@ public class BannerAd : MonoBehaviour
 
     public void ShowBannerAd()
     {
-        if(isBannerVisible)
+        BannerOptions bannerOptions = new BannerOptions
         {
-            HideBannerAd();
-        } else
-        {
-            BannerOptions bannerOptions = new BannerOptions
-            {
-                clickCallback = OnBannerClicked,
-                hideCallback = OnBannerHidden,
-                showCallback = OnBannerShown
-            };
-            Advertisement.Banner.Show(_adUnitId, bannerOptions);
-        }
+            clickCallback = OnBannerClicked,
+            hideCallback = OnBannerHidden,
+            showCallback = OnBannerShown
+        };
+        Advertisement.Banner.Show(_adUnitId, bannerOptions);
     }
 
     void OnBannerClicked()
@@ -72,13 +70,11 @@ public class BannerAd : MonoBehaviour
     void OnBannerHidden()
     {
         Debug.Log("Banner ad is hidden! "+_adUnitId);
-        isBannerVisible = false;
     }
 
     void OnBannerShown()
     {
         Debug.Log("Banner ad is visible! " + _adUnitId);
-        isBannerVisible = true;
     }
 
     public void HideBannerAd()
@@ -86,6 +82,7 @@ public class BannerAd : MonoBehaviour
         Advertisement.Banner.Hide();
     }
 
+    /*
     public void SetButton(Button button)
     {
         if (button == null)
@@ -98,4 +95,5 @@ public class BannerAd : MonoBehaviour
         _bannerButton = button;
         _bannerButton.interactable = false;
     }
+    */
 }
