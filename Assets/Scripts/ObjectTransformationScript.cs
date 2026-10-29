@@ -38,14 +38,20 @@ public class ObjectTransformationScript : MonoBehaviour
             rc.localScale -= new Vector3(0, scaleSpeed * Time.deltaTime, 0);
         }
 
-        if (scaleUpX && rc.localScale.x < 0.9f)
+        if (scaleUpX && (rc.localScale.x < 0.9f && rc.localScale.x > 0f))
         {
             rc.localScale += new Vector3(scaleSpeed * Time.deltaTime, 0, 0);
-        }
-
-        if (scaleDownX && rc.localScale.x > 0.3f)
+        } else if (scaleUpX && (rc.localScale.x > -0.9f && rc.localScale.x < 0))
         {
             rc.localScale -= new Vector3(scaleSpeed * Time.deltaTime, 0, 0);
+        }
+
+        if (scaleDownX && (rc.localScale.x > 0.3f && rc.localScale.x > 0))
+        {
+            rc.localScale -= new Vector3(scaleSpeed * Time.deltaTime, 0, 0);
+        } else if (scaleDownX && (rc.localScale.x < -0.3f && rc.localScale.x < 0))
+        {
+            rc.localScale += new Vector3(scaleSpeed * Time.deltaTime, 0, 0);
         }
 
         if (flipped)
@@ -57,23 +63,23 @@ public class ObjectTransformationScript : MonoBehaviour
         isTransforming = rotateCW || rotateCCW || scaleUpY || scaleDownY || scaleUpX || scaleDownX || flipped;
     }
 
-    public void StartRotateCW() { rotateCW = true; }
-    public void StopRotateCW() { rotateCW = false; }
+    public void StartRotateCW(BaseEventData eventData) { rotateCW = true; }
+    public void StopRotateCW(BaseEventData eventData) { rotateCW = false; }
 
-    public void StartRotateCCW() { rotateCCW = true; }
-    public void StopRotateCCW() { rotateCCW = false; }
+    public void StartRotateCCW(BaseEventData eventData) { rotateCCW = true; }
+    public void StopRotateCCW(BaseEventData eventData) { rotateCCW = false; }
 
-    public void StartScaleUpY() { scaleUpY = true; }
-    public void StopScaleUpY() { scaleUpY = false; }
+    public void StartScaleUpY(BaseEventData eventData) { scaleUpY = true; }
+    public void StopScaleUpY(BaseEventData eventData) { scaleUpY = false; }
 
-    public void StartScaleDownY() { scaleDownY = true; }
-    public void StopScaleDownY() { scaleDownY = false; }
+    public void StartScaleDownY(BaseEventData eventData) { scaleDownY = true; }
+    public void StopScaleDownY(BaseEventData eventData) { scaleDownY = false; }
 
-    public void StartScaleUpX() { scaleUpX = true; }
-    public void StopScaleUpX() { scaleUpX = false; }
+    public void StartScaleUpX(BaseEventData eventData) { scaleUpX = true; }
+    public void StopScaleUpX(BaseEventData eventData) { scaleUpX = false; }
 
-    public void StartScaleDownX() { scaleDownX = true; }
-    public void StopScaleDownX() { scaleDownX = false; }
+    public void StartScaleDownX(BaseEventData eventData) { scaleDownX = true; }
+    public void StopScaleDownX(BaseEventData eventData) { scaleDownX = false; }
 
     public void flip() { flipped = true; }
 }

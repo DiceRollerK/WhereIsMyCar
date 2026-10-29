@@ -41,7 +41,7 @@ public class AdManager : MonoBehaviour
     {
         if (!turnOffInterstitialAds)
         {
-            interstitialAd.OnInterstitialAdReady += HandleInterstitialReady;
+            //interstitialAd.OnInterstitialAdReady += HandleInterstitialReady;
             interstitialAd.LoadAd();
         }
 
@@ -56,6 +56,7 @@ public class AdManager : MonoBehaviour
         }
     }
 
+    /*
     private void HandleInterstitialReady()
     {
         if(!firstAdShown)
@@ -68,6 +69,7 @@ public class AdManager : MonoBehaviour
             Debug.Log("Interstitial ad is ready to be shown again!");
         }
     }
+    */
 
     private void OnEnable()
     {

@@ -176,6 +176,7 @@ public class GameObjectsScript : MonoBehaviour
         tractor2.transform.position = tractor2Coord;
         firetruck.transform.position = firetruckCoord;
 
+
         garbageTruckPlace.transform.position = garbageTruckPlaceCoord;
         medicinePlace.transform.position = medicinePlaceCoord;
         schoolBusPlace.transform.position = schoolBusPlaceCoord;
@@ -201,6 +202,7 @@ public class GameObjectsScript : MonoBehaviour
         Randomize(tractor.GetComponent<RectTransform>());
         Randomize(tractor2.GetComponent<RectTransform>());
         Randomize(firetruck.GetComponent<RectTransform>());
+
     }
 
     int[] shuffle(int[] numbers)
