@@ -14,6 +14,10 @@ public class SceneChangeScript : MonoBehaviour
     {
         ChangeScene("MainMenu");
     }
+    public void TowerScene()
+    {
+        ChangeScene("TowerScene");
+    }
 
     void ChangeScene(string sceneName)
     {
