@@ -475,6 +475,7 @@ GameObject:
   - component: {fileID: 107403731}
   - component: {fileID: 107403732}
   - component: {fileID: 107403733}
+  - component: {fileID: 107403734}
   m_Layer: 0
   m_Name: ScriptHolder
   m_TagString: Untagged
@@ -649,12 +650,12 @@ MonoBehaviour:
   offset: {x: 0, y: 0, z: 0}
   worldBounds:
     serializedVersion: 2
-    x: -960
-    y: -540
-    width: 1920
-    height: 1080
+    x: -950
+    y: -530
+    width: 1910
+    height: 1060
   reductionFactor: 0.05
-  mainCamera: {fileID: 0}
+  mainCamera: {fileID: 519420031}
 --- !u!114 &107403731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -709,6 +710,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1608408878}
   click: {fileID: 8300000, guid: 49c541fdb4d947143b342c5c320d5f97, type: 3}
+--- !u!114 &107403734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107403727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faddfa839cc907a4a8bf19a74d4adfe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flyingObjectManager: {fileID: 1500670185}
+  slowDuration: 10
 --- !u!1 &114199875
 GameObject:
   m_ObjectHideFlags: 0
@@ -6244,8 +6259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _androidAdUnitId: BP_Rewarded_Android
-  _rewardedAdButton: {fileID: 1288060969}
-  flyingObjectManager: {fileID: 1500670185}
+  reloadDelay: 15
 --- !u!114 &1500670187
 MonoBehaviour:
   m_ObjectHideFlags: 0

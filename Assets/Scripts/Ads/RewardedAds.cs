@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Advertisements;
 using UnityEngine.UI;
@@ -6,109 +7,29 @@ using UnityEngine.UI;
 public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
 {
     [SerializeField] string _androidAdUnitId = "BP_Rewarded_Android";
-    string _adUnitId;
+    [SerializeField] float reloadDelay = 15f;
 
-    [SerializeField] Button _rewardedAdButton;
-    public FlyingObjectManager flyingObjectManager;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
-    {
-        _adUnitId = _androidAdUnitId;
-        if(flyingObjectManager == null)
-        {
-            flyingObjectManager = FindFirstObjectByType<FlyingObjectManager>();
-        }
-    }
+    // Scene scripts subscribe to this to decide what the reward does.
+    public static event Action OnRewardEarned;
+
+    Button _rewardedAdButton;
 
     public void LoadAd()
     {
-        if (!Advertisement.isInitialized)
-        {
-            Debug.Log("Tried to load rewarded ad before Unity Ads was initialized");
-            return;
-        }
-
-        Debug.Log("Loading Rewarded ad: " + _adUnitId);
-        Advertisement.Load(_adUnitId, this);
-    }
-
-    public void OnUnityAdsAdLoaded(string placementId)
-    {
-        Debug.Log("Rewarded ad loaded: "+ placementId);
-
-        if(placementId.Equals(_adUnitId))
-        {
-            if (_rewardedAdButton != null)
-            {
-                _rewardedAdButton.interactable = true;
-            }
-        }
+        if (!Advertisement.isInitialized) return;
+        Advertisement.Load(_androidAdUnitId, this);
     }
 
     public void ShowAd()
     {
-        AdManager.Instance.bannerAd.HideBannerAd();
-        _rewardedAdButton.interactable = false;
-        Advertisement.Show(_adUnitId, this);
-    }
-
-    public void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message)
-    {
-        Debug.Log($"Error loading rewarded ad {placementId} : {error.ToString()} - {message}");
-        StartCoroutine(WaitAndLoadAd(10f));
-    }
-
-    private IEnumerator WaitAndLoadAd(float delay)
-    {
-        yield return new WaitForSecondsRealtime(delay);
-        LoadAd();
-    }
-
-    public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)
-    {
-        Time.timeScale = 1f;
-        if (AdManager.Instance.bannerAd != null)
-        {
-            AdManager.Instance.bannerAd.ShowBannerAd();
-        }
-        Debug.Log($"Error showing rewarded ad: {placementId} : {error.ToString()} - {message}");
-        StartCoroutine(WaitAndLoadAd(10f));
-    }
-
-    public void OnUnityAdsShowStart(string placementId)
-    {
-        Time.timeScale = 0f;
-    }
-
-    public void OnUnityAdsShowClick(string placementId)
-    {
-        Debug.Log("User clicked on rewarded ad: " + placementId);
-    }
-
-    public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
-    {
-        if (!placementId.Equals(_adUnitId))
-        {
-            return;
-        }
-        Time.timeScale = 1f;
-        if(showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
-        {
-            Debug.Log("Rewarded ad completed!");
-            flyingObjectManager.DestroyAllFlyingObjects();
-            _rewardedAdButton.interactable = false;
-            StartCoroutine(SlowDownTimeTemporarily(10f));
-        }
-        AdManager.Instance.bannerAd.ShowBannerAd();
-        StartCoroutine(WaitAndLoadAd(15f));
+        SetBanner(false);
+        if (_rewardedAdButton != null) _rewardedAdButton.interactable = false;
+        Advertisement.Show(_androidAdUnitId, this);
     }
 
     public void SetButton(Button button)
     {
-        if(button == null)
-        {
-            return;
-        }
+        if (button == null) return;
 
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(ShowAd);
@@ -116,12 +37,53 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
         _rewardedAdButton.interactable = false;
     }
 
-    private IEnumerator SlowDownTimeTemporarily(float duration)
+    public void OnUnityAdsAdLoaded(string placementId)
     {
-        Time.timeScale = 0.3f;
-        Debug.Log("Time slowed down for " + duration + " seconds.");
-        yield return new WaitForSecondsRealtime(duration);
+        if (placementId == _androidAdUnitId && _rewardedAdButton != null)
+            _rewardedAdButton.interactable = true;
+    }
+
+    public void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message)
+    {
+        Debug.LogWarning($"Rewarded ad failed to load: {error} - {message}");
+        StartCoroutine(ReloadAfter(10f));
+    }
+
+    public void OnUnityAdsShowStart(string placementId) { Time.timeScale = 0f; }
+
+    public void OnUnityAdsShowClick(string placementId) { }
+
+    public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState state)
+    {
+        if (placementId != _androidAdUnitId) return;
+
         Time.timeScale = 1f;
-        Debug.Log("Time restored to normal.");
+        SetBanner(true);
+
+        if (state == UnityAdsShowCompletionState.COMPLETED)
+            OnRewardEarned?.Invoke();           // after timeScale is restored
+
+        StartCoroutine(ReloadAfter(reloadDelay));
+    }
+
+    public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)
+    {
+        Debug.LogWarning($"Rewarded ad failed to show: {error} - {message}");
+        Time.timeScale = 1f;
+        SetBanner(true);
+        StartCoroutine(ReloadAfter(10f));
+    }
+
+    IEnumerator ReloadAfter(float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+        LoadAd();
+    }
+
+    static void SetBanner(bool show)
+    {
+        var banner = AdManager.Instance != null ? AdManager.Instance.bannerAd : null;
+        if (banner == null) return;
+        if (show) banner.ShowBannerAd(); else banner.HideBannerAd();
     }
 }
