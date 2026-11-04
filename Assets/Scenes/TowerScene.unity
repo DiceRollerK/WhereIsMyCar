@@ -1133,6 +1133,9 @@ MonoBehaviour:
   starOn: {r: 1, g: 1, b: 1, a: 1}
   starOff: {r: 0.25, g: 0.25, b: 0.25, a: 1}
   trophy: {fileID: 1487678844}
+  audioSource: {fileID: 1254951285}
+  moveClip: {fileID: 8300000, guid: 49c541fdb4d947143b342c5c320d5f97, type: 3}
+  wrongClip: {fileID: 8300000, guid: b9b07741ed3ffaa4db4f6d88c747bef4, type: 3}
 --- !u!114 &803979182
 MonoBehaviour:
   m_ObjectHideFlags: 0

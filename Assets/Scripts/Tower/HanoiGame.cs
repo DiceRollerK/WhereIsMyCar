@@ -34,6 +34,11 @@ public class HanoiGame : MonoBehaviour
     public Color starOff = new Color(0.25f, 0.25f, 0.25f, 1f);
     public GameObject trophy;
 
+    [Header("Sounds")]
+    public AudioSource audioSource;
+    public AudioClip moveClip;      // valid move
+    public AudioClip wrongClip;     // illegal move (bigger block onto a smaller one)
+
     public int Moves { get; private set; }
 
     readonly List<HanoiBlock>[] stacks = new List<HanoiBlock>[3];
@@ -107,16 +112,21 @@ public class HanoiGame : MonoBehaviour
     public void Drop(HanoiBlock b)
     {
         int target = NearestPole(b.Rect.position.x);
-        if (target == b.PoleIndex) return;
+        if (target == b.PoleIndex) return;              // put back where it was: no sound
 
         var dest = stacks[target];
-        if (dest.Count > 0 && dest[dest.Count - 1].Size < b.Size) return;   // bigger onto smaller: no
+        if (dest.Count > 0 && dest[dest.Count - 1].Size < b.Size)
+        {
+            Play(wrongClip);                            // bigger onto smaller
+            return;
+        }
 
         stacks[b.PoleIndex].Remove(b);
         dest.Add(b);
         b.PoleIndex = target;
         Moves++;
         UpdateMoveUI();
+        Play(moveClip);
 
         if (stacks[2].Count == blockList.Count) Win();
     }
@@ -198,6 +208,12 @@ public class HanoiGame : MonoBehaviour
         Moves = Mathf.Max(0, Moves - amount);
         UpdateMoveUI();
     }
+
+    void Play(AudioClip clip)
+    {
+        if (audioSource != null && clip != null) audioSource.PlayOneShot(clip);
+    }
+
     public class HanoiBlock : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
         public int Size { get; private set; }           // bigger number = bigger block
