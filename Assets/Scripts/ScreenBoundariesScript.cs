@@ -88,7 +88,7 @@ public class ScreenBoundariesScript : MonoBehaviour
 
             if(halfHeight * 2f >= (wbMaxY - wbMinY))
             {
-                minCamY = maxCamY = (wbMinY + wbMaxY) * 0.05f;
+                minCamY = maxCamY = (wbMinY + wbMaxY) * 0.5f;
             } else
             {
                 minCamY = wbMinY + halfHeight;

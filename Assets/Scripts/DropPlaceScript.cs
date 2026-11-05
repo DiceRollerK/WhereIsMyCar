@@ -95,22 +95,14 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
                 gameObjectsScript.inRightPlace = false;
                 gameObjectsScript.carSoundSource.PlayOneShot(gameObjectsScript.sounds[13]);
 
-                eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
-
-                eventData.pointerDrag.GetComponent<RectTransform>().localScale = GetComponent<RectTransform>().localScale;
-
-                eventData.pointerDrag.GetComponent<RectTransform>().localRotation = GetComponent<RectTransform>().localRotation;
-
                 switch (eventData.pointerDrag.tag)
                 {
                     case "Garbage":
                         gameObjectsScript.garbageTruck.GetComponent<RectTransform>().localPosition = gameObjectsScript.garbageTruckCoord;
                         break;
-
                     case "Ambulance":
                         gameObjectsScript.medicine.GetComponent<RectTransform>().localPosition = gameObjectsScript.medicineCoord;
                         break;
-
                     case "School":
                         gameObjectsScript.schoolBus.GetComponent<RectTransform>().localPosition = gameObjectsScript.schoolBusCoord;
                         break;
@@ -144,7 +136,7 @@ public class DropPlaceScript : MonoBehaviour, IDropHandler
                     default:
                         Debug.Log("No matching tag found for the dropped object: " + eventData.pointerDrag.tag);
                         break;
-                }
+                    }
             }
     }
 }

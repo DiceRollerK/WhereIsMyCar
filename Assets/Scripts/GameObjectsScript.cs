@@ -203,6 +203,18 @@ public class GameObjectsScript : MonoBehaviour
         Randomize(tractor2.GetComponent<RectTransform>());
         Randomize(firetruck.GetComponent<RectTransform>());
 
+        FlipRandomly(garbageTruckPlace.GetComponent<RectTransform>());
+        FlipRandomly(medicinePlace.GetComponent<RectTransform>());
+        FlipRandomly(schoolBusPlace.GetComponent<RectTransform>());
+        FlipRandomly(carPlace.GetComponent<RectTransform>());
+        FlipRandomly(cementTruckPlace.GetComponent<RectTransform>());
+        FlipRandomly(car2Place.GetComponent<RectTransform>());
+        FlipRandomly(car3Place.GetComponent<RectTransform>());
+        FlipRandomly(excavatorPlace.GetComponent<RectTransform>());
+        FlipRandomly(policePlace.GetComponent<RectTransform>());
+        FlipRandomly(tractorPlace.GetComponent<RectTransform>());
+        FlipRandomly(tractor2Place.GetComponent<RectTransform>());
+        FlipRandomly(firetruckPlace.GetComponent<RectTransform>());
     }
 
     int[] shuffle(int[] numbers)
@@ -225,6 +237,13 @@ public class GameObjectsScript : MonoBehaviour
         }
         carObject.localScale = new Vector3(Random.Range(0.3f, 0.9f) * number, Random.Range(0.3f, 0.9f), 1f);
         carObject.Rotate(0, 0, Random.Range(-180.0f, 180.0f));
+    }
+
+    void FlipRandomly(RectTransform place)
+    {
+        Vector3 s = place.localScale;
+        s.x = Mathf.Abs(s.x) * (Random.value < 0.5f ? -1f : 1f);
+        place.localScale = s;
     }
 
     void Update()
